@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>Input Session Details</h1>
+  <div class="form-group">
+    <form action="/createsession" method="POST">
+    <h3>Date of Session </h3>
+    <input placeholder="dd-mm-yyyy" type="date" id="sessiondate" name="sessiondate"><br>
+    <table style="width:80%">
+      <tr>
+        <th>Player</th>
+        <th>Name of Player</th>
+        <th>Score</th>
+      </tr>
+         <tr>
+              <td> First </td>
+              <td> <input list="players" name="firstplayername" id="firstplayername" required></td>
+              <td> <input type="number" step="0.01" name="firstplayerscore" id="firstplayerscore" required><td>
+         </tr>
+         <tr>
+              <td> Second </td>
+              <td> <input list="players" name="secondplayername" id="secondplayername" required></td>
+              <td> <input type="number" step="0.01" name="secondplayerscore" id="secondplayerscore" required><td>
+         </tr>
+         <tr>
+              <td> Third </td>
+              <td> <input list="players" name="thirdplayername" id="thirdplayername" required></td>
+              <td> <input type="number" step="0.01" name="thirdplayerscore" id="thirdplayerscore" required><td>
+         </tr>
+         <tr>
+              <td> Fourth </td>
+              <td> <input list="players" name="fourthplayername" id="fourthplayername" required></td>
+              <td> <input type="number" step="0.01" name="fourthplayerscore" id="fourthplayerscore" required><td>
+         </tr>
+    </table>
+
+
+    <datalist id="players">
+      {% for player in players %}
+        <option value="{{ player.name }}">{{ player.name }}</option>
+      {% endfor %}
+    </datalist>
+    <button type="submit" class="btn btn-primary">Submit Session</button>
+</form>
+  </div>
+
+{% endblock %}
