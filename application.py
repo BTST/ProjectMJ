@@ -11,9 +11,11 @@ from decimal import Decimal
 #app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
 
 app = Flask(__name__)
-URL = process.env.DATABASEURL
-SECRETKEY = process.env.SECRET_KEY
-GRRequestKey = process.env.GRRequestKey
+
+
+URL = os.environ['DATABASEURL']
+SECRETKEY = os.environ['SECRET_KEY']#process.env.SECRET_KEY
+GRRequestKey = os.environ['GRRequestKey']
 engine = create_engine(URL)
 db = scoped_session(sessionmaker(bind=engine))
 #api = Api(app)
