@@ -7,21 +7,14 @@
 
 <table style="width:90%">
   <tr>
-    <th>Session No.</th>
     <th>Date of Game</th>
-    <th>Player Name</th>
-    <th>Score </th>
-    <th>Player Name</th>
-    <th>Score </th>
-    <th>Player Name</th>
-    <th>Score </th>
-    <th>Player Name</th>
-    <th>Score </th>
+    {% for player in players %}
+    <th>{{ player.name }}</th>
+    {% endfor %}
   </tr>
   {% for score in allsessions %}
     <tr>
     {% for key, value in score.items() %}
-    <td>{{ key }} </td>
     <td>{{ value }}</td>
     {% endfor %}
     </tr>

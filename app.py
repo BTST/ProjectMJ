@@ -7,70 +7,192 @@ import requests
 import json
 from datetime import datetime
 from decimal import Decimal
-
-os.environ.get('TIMES')
-
 app = Flask(__name__)
+
 URL = os.environ.get('DATABASE_URL2')
 SECRETKEY = os.environ.get('SECRET_KEY')
 GRRequestKey = os.environ.get('GRRequestKey')
+
 engine = create_engine(URL)
 db = scoped_session(sessionmaker(bind=engine))
 bootstrap = Bootstrap(app)
 
 
 class SessionRecord:
-
     def __init__(self, players,session):
         self.date = date
         self.players = players
         self.session = session
 
+class Players:
+    def __init__(self, numberOf, names):
+        self.numberOf = numberOf
+        self.names = names
+
+@app.route("/deletesession", methods = ["GET", "POST"])
+def deletesession():
+    realSessions = db.execute("SELECT * FROM mjsessions")
+    req = request.form
+    sessionToDelete = req.get("sessiontodelete")
+    if not sessionToDelete == None:
+        deleteSessionCommand = "DELETE FROM mjsessions WHERE id = " + str(sessionToDelete)
+        db.execute(deleteSessionCommand)
+    db.commit()
+    return render_template("deletesession.html", realsessions=realSessions)
+    #return redirect(url_for("allsessions"))
+
+
 @app.route("/allsessions")
 def allsessions():
-    allsessions = []
 
+
+    allsessions = []
+    players = db.execute("SELECT * FROM mjplayer")
     sessions = db.execute("SELECT * FROM mjsessions")
     #players = db.execute("SELECT * FROM players")
     x = 1
     for session in sessions:
+        playerlist = [1, 2, 3, 4, 5]
         playeroneid = session.playerone_id
         playerOneCommand = "SELECT * FROM mjplayer WHERE id = " + str(playeroneid)
         playerone = db.execute(playerOneCommand).fetchone()
         playeronename = playerone.name
         playeronescore = session.playerone_score
-
+        if playerone.id == 1:
+            playonename = playeronename
+            playonescore = playeronescore
+            playerlist.remove(1)
+        if playerone.id == 2:
+            playtwoname = playeronename
+            playtwoscore = playeronescore
+            playerlist.remove(2)
+        if playerone.id == 3:
+            playthreename = playeronename
+            playthreescore = playeronescore
+            playerlist.remove(3)
+        if playerone.id == 4:
+            playfourname = playeronename
+            playfourscore = playeronescore
+            playerlist.remove(4)
+        if playerone.id == 5:
+            playfivename = playeronename
+            playfivescore = playeronescore
+            playerlist.remove(5)
         playertwoid = session.playertwo_id
         playerTwoCommand = "SELECT * FROM mjplayer WHERE id = " + str(playertwoid)
         playertwo = db.execute(playerTwoCommand).fetchone()
         playertwoname = playertwo.name
         playertwoscore = session.playertwo_score
+        playertwoTableID = playertwo.id
+        if playertwo.id == 1:
+            playonename = playertwoname
+            playonescore = playertwoscore
+            playerlist.remove(1)
+        if playertwo.id == 2:
+            playtwoname = playertwoname
+            playtwoscore = playertwoscore
+            playerlist.remove(2)
+        if playertwo.id == 3:
+            playthreename = playertwoname
+            playthreescore = playertwoscore
+            playerlist.remove(3)
+        if playertwo.id == 4:
+            playfourname = playertwoname
+            playfourscore = playertwoscore
+            playerlist.remove(4)
+        if playertwo.id == 5:
+            playfivename = playertwoname
+            playfivescore = playertwoscore
+            playerlist.remove(5)
 
         playerthreeid = session.playerthree_id
         playerThreeCommand = "SELECT * FROM mjplayer WHERE id = " + str(playerthreeid)
         playerthree = db.execute(playerThreeCommand).fetchone()
         playerthreename = playerthree.name
         playerthreescore = session.playerthree_score
+        playertthreeTableID = playerthree.id
+        if playerthree.id == 1:
+            playonename = playerthreename
+            playonescore = playerthreescore
+        if playerthree.id == 2:
+            playtwoname = playerthreename
+            playtwoscore = playerthreescore
+        if playerthree.id == 3:
+            playthreename = playerthreename
+            playthreescore = playerthreescore
+        if playerthree.id == 4:
+            playfourname = playerthreename
+            playfourscore = playerthreescore
+        if playerthree.id == 5:
+            playfivename = playerthreename
+            playfivescore = playerthreescore
 
         playerfourid = session.playerfour_id
         playerFourCommand = "SELECT * FROM mjplayer WHERE id = " + str(playerfourid)
         playerfour = db.execute(playerFourCommand).fetchone()
         playerfourname = playerfour.name
         playerfourscore = session.playerfour_score
+        playerfourTableID = playerfour.id
+        if playerfour.id == 1:
+            playonename = playerfourname
+            playonescore = playerfourscore
+            playerlist.remove(1)
+        if playerfour.id == 2:
+            playtwoname = playerfourname
+            playtwoscore = playerfourscore
+            playerlist.remove(2)
+        if playerfour.id == 3:
+            playthreename = playerfourname
+            playthreescore = playerfourscore
+            playerlist.remove(3)
+        if playerfour.id == 4:
+            playfourname = playerfourname
+            playfourscore = playerfourscore
+            playerlist.remove(4)
+        if playerfour.id == 5:
+            playfivename = playerfourname
+            playfivescore = playerfourscore
+            playerlist.remove(5)
+
+        playerWhoDidNotPlay = playerlist[0];
+        playerFiveCommand = "SELECT * FROM mjplayer WHERE id = " + str(playerWhoDidNotPlay)
+        playerfive = db.execute(playerFiveCommand).fetchone()
+        playerfivename = playerfive.name
+        playerfivescore = "Did not play"
+        playerfiveTableID = playerfive.id
+        if playerfive.id == 1:
+            playonename = playerfivename
+            playonescore = playerfivescore
+        if playerfive.id == 2:
+            playtwoname = playerfivename
+            playtwoscore = playerfivescore
+        if playerfive.id == 3:
+            playthreename = playerfivename
+            playthreescore = playerfivescore
+        if playerfive.id == 4:
+            playfourname = playerfivename
+            playfourscore = playerfivescore
+        if playerfive.id == 5:
+            playfivename = playerfivename
+            playfivescore = playerfivescore
+
+
         dateString = str(session.gamedate)
         dateString = dateString[:10]
 
 
         scores = {
             x : dateString,
-            playeronename : playeronescore,
-            playertwoname : playertwoscore,
-            playerthreename : playerthreescore,
-            playerfourname : playerfourscore
+            playonename : playonescore,
+            playtwoname : playtwoscore,
+            playthreename : playthreescore,
+            playfourname : playfourscore,
+            playfivename : playfivescore
+
         }
         allsessions.append(scores)
         x = x + 1
-    return render_template("allsessions.html", allsessions=allsessions)
+    return render_template("allsessions.html", allsessions=allsessions, players=players)
 
 class MahjongPlayer:
     def __init__(self, name, id, gamesplayed, averagescore, lifetime):
