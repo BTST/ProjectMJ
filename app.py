@@ -39,7 +39,7 @@ def deletesession():
         db.execute(deleteSessionCommand)
     db.commit()
     return render_template("deletesession.html", realsessions=realSessions)
-    return redirect(url_for("allsessions"))
+    
 
 
 @app.route("/"):
