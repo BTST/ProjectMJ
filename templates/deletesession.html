@@ -16,6 +16,7 @@
     <th>playerfour_score</th>
   </tr>
 {% for session in realsessions %}
+<tr>
 <td> {{ session.id }} </td>
 <td>{{ session.gamedate }}</td>
 <td> {{ session.playerone_id }} </td>
@@ -26,15 +27,16 @@
 <td>{{ session.playertwo_score }}</td>
 <td> {{ session.playerthree_score }} </td>
 <td>{{ session.playerfour_score }}</td>
+  </tr>
 {% endfor %}
 
 </table>
 
 <div class="form-group">
   <form action="/deletesession" method="POST">
-  <h4>Delete Session </h4>
+  <h4>Insert Session Number To Delete </h4>
   <input type="number" name="sessiontodelete" id="sessiontodelete" required></td>
-  <button type="submit" class="btn btn-primary">delete Session</button>
+  <button type="submit" class="btn btn-primary">delete session number</button>
   </form>
 </div>
 {% endblock %}

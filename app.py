@@ -37,7 +37,7 @@ def deletesession():
     if not sessionToDelete == None:
         deleteSessionCommand = "DELETE FROM mjsessions WHERE id = " + str(sessionToDelete)
         db.execute(deleteSessionCommand)
-    db.commit()
+        db.commit()
     return render_template("deletesession.html", realsessions=realSessions)
 
 @app.route("/")
@@ -191,6 +191,8 @@ def allsessions():
 
         }
         allsessions.append(scores)
+        allsessions.sort()
+
         x = x + 1
     return render_template("allsessions.html", allsessions=allsessions, players=players)
 
@@ -284,9 +286,8 @@ def createsessions():
     sessionInsertCommand = "INSERT INTO mjsessions (gamedate, playerone_id, playertwo_id, playerthree_id, playerfour_id, playerone_score, playertwo_score, playerthree_score, playerfour_score) VALUES ('%s', '%d', '%d', '%d', '%d','%d', '%d', '%d', '%d')" % (date, playerone_id, playertwo_id, playerthree_id, playerfour_id, playerone_score, playertwo_score, playerthree_score, playerfour_score)
     db.execute(sessionInsertCommand)
     db.commit()
-
-    return render_template("allsessions.html")
-#@app.route("/createnewplayer", methods=["GET", "POST"])
+    return redirect(url_for("allsessions"))
+    #@app.route("/createnewplayer", methods=["GET", "POST"])
 #def createnewplayer()
 
 
