@@ -7,18 +7,15 @@ import requests
 import json
 from datetime import datetime
 from decimal import Decimal
-#"postgres://bjwxmuebywiexo:cbb7614809a4bba5aa0a32b18dbef509fed6732c10ca07a2b81dc2dac043d721@ec2-54-211-210-149.compute-1.amazonaws.com:5432/d2n3ohvdkibnt3"
-#app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
+
+os.environ.get('TIMES')
 
 app = Flask(__name__)
-
-
-URL = os.environ['DATABASEURL']
-SECRETKEY = os.environ['SECRET_KEY']#process.env.SECRET_KEY
-GRRequestKey = os.environ['GRRequestKey']
+URL = os.environ.get('DATABASE_URL2')
+SECRETKEY = os.environ.get('SECRET_KEY')
+GRRequestKey = os.environ.get('GRRequestKey')
 engine = create_engine(URL)
 db = scoped_session(sessionmaker(bind=engine))
-#api = Api(app)
 bootstrap = Bootstrap(app)
 
 

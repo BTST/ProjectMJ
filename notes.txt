@@ -1,0 +1,3 @@
+move variables into env
+example: os.environ.get('TIMES')
+URL = DATABASE_URL
