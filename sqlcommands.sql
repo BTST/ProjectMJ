@@ -28,3 +28,7 @@ INSERT INTO mjplayer (name) VALUES ('Lingwei');
 URL="postgres://bjwxmuebywiexo:cbb7614809a4bba5aa0a32b18dbef509fed6732c10ca07a2b81dc2dac043d721@ec2-54-211-210-149.compute-1.amazonaws.com:5432/d2n3ohvdkibnt3"
 app.config['SECRET_KEY']="OCML3BRawWEUeaxcuKHLpw"
 GRRequestKey="GZ4LbC681pT1BZJO6WLQ"
+
+git push heroku master
+heroku ps:scale web=1
+heroku open
