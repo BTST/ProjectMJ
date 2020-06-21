@@ -34,3 +34,18 @@ heroku ps:scale web=1
 heroku open
 heroku ps
 heroku logs --tail
+
+<div class="navbar navbar-fixed-top">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{{ url_for('allsessions') }}">All</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="{{ url_for('players') }}">Player Records</a></li>
+        <li><a href="{{ url_for('sessions') }}">Create New</a></li>
+        <li><a href="{{ url_for('deletesession') }}">Delete</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
