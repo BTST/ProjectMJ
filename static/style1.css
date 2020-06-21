@@ -1,14 +1,14 @@
 table {
 border-collapse: collapse;
 width: 100%;
-color: #588c7e;
+color: lightblue;
 font-family: monospace;
-font-size: 25px;
+font-size: 8px;
 text-align: left;
 }
 
 th {
-background-color: #588c7e;
+background-color: lightblue;
 color: white;
 }
 
