@@ -191,7 +191,7 @@ def allsessions():
 
         }
         allsessions.append(scores)
-        allsessions.sort()
+        
 
         x = x + 1
     return render_template("allsessions.html", allsessions=allsessions, players=players)
