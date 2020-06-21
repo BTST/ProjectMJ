@@ -10,7 +10,6 @@
         <a class="navbar-brand" href="{{ url_for('allsessions') }}">All Sessions</a>
       </div>
       <ul class="nav navbar-nav">
-
         <li><a href="{{ url_for('players') }}">Players Overall Records</a></li>
         <li><a href="{{ url_for('sessions') }}">Create New Session</a></li>
         <li><a href="{{ url_for('deletesession') }}">Delete Sessions</a></li>
@@ -18,14 +17,6 @@
     </div>
   </nav>
 </div>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
 {% endblock %}
 
 {% block styles %}
@@ -34,7 +25,4 @@
       href="{{url_for('.static', filename='style1.css')}}">
 {% endblock %}
 {% block content %}
-<<body>
-  
-</body>
 {% endblock %}

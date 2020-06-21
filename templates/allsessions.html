@@ -1,14 +1,10 @@
 {% extends "layout.html" %}
 
-
 {% block content %}
-
 <div class='container'>
   <div class="jumbotron">
-<h1>All Sessions </h1>
-
-
-<table style="width:90%">
+<h2>All Sessions </h2>
+<table style="width:100%">
   <tr>
     <th>Date of Game</th>
     {% for player in players %}
@@ -25,5 +21,4 @@
 </table>
  </div>
 </div>
-
 {% endblock %}
