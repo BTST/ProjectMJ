@@ -32,3 +32,5 @@ GRRequestKey="GZ4LbC681pT1BZJO6WLQ"
 git push heroku master
 heroku ps:scale web=1
 heroku open
+heroku ps
+heroku logs --tail

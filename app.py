@@ -39,10 +39,8 @@ def deletesession():
         db.execute(deleteSessionCommand)
     db.commit()
     return render_template("deletesession.html", realsessions=realSessions)
-    
 
-
-@app.route("/"):
+@app.route("/")
 def index():
     return redirect(url_for("allsessions"))
 
