@@ -39,13 +39,15 @@ def deletesession():
         db.execute(deleteSessionCommand)
     db.commit()
     return render_template("deletesession.html", realsessions=realSessions)
-    #return redirect(url_for("allsessions"))
+    return redirect(url_for("allsessions"))
 
+
+@app.route("/"):
+def index():
+    return redirect(url_for("allsessions"))
 
 @app.route("/allsessions")
 def allsessions():
-
-
     allsessions = []
     players = db.execute("SELECT * FROM mjplayer")
     sessions = db.execute("SELECT * FROM mjsessions")
