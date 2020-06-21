@@ -1,6 +1,6 @@
 CREATE TABLE mjsessions (
     id SERIAL PRIMARY KEY,
-    gamedate VARCHAR NOT NULL,
+    gamedate DATE NOT NULL,
     playerone_id INTEGER NOT NULL,
     playertwo_id INTEGER NOT NULL,
     playerthree_id INTEGER NOT NULL,
