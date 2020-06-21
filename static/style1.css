@@ -15,21 +15,3 @@ color: white;
 .col-md-3 {
     background: white;
 }
-
-.col-md-3#run {
-        background: lightblue;
-}
-
-.col-md-3#walk {
-        background: lightgreen;
-    }
-
-.col-md-3#row {
-        background: lightpink;
-    }
-
-.col-md-3#pull {
-        background: lightyellow;
-    }
-
-}
