@@ -158,7 +158,7 @@ def allsessions():
         playerFiveCommand = "SELECT * FROM mjplayer WHERE id = " + str(playerWhoDidNotPlay)
         playerfive = db.execute(playerFiveCommand).fetchone()
         playerfivename = playerfive.name
-        playerfivescore = "Did not play"
+        playerfivescore = "Did Not Play"
         playerfiveTableID = playerfive.id
         if playerfive.id == 1:
             playonename = playerfivename
@@ -181,6 +181,7 @@ def allsessions():
         dateString = dateString[:10]
 
 
+
         scores = {
             x : dateString,
             playonename : playonescore,
@@ -191,7 +192,7 @@ def allsessions():
 
         }
         allsessions.append(scores)
-        
+
 
         x = x + 1
     return render_template("allsessions.html", allsessions=allsessions, players=players)
