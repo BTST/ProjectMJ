@@ -1,6 +1,13 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}Layout{% endblock %}
+{% block head %}
+{{super()}}
+<script data-ad-client="ca-pub-3885577411583615" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+{% endblock %}
+
+
 
 {% block navbar %}
 <nav class="navbar navbar-inverse">
@@ -32,4 +39,3 @@
 
 {% block content %}
 {% endblock %}
-<script data-ad-client="ca-pub-3885577411583615" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
