@@ -1,9 +1,8 @@
 {% extends "layout.html" %}
 
+
 {% block content %}
 <div class='container'>
-
-
   <h1>Input Session Details</h1>
     <div class="form-group">
       <form action="/createsession" method="POST">
@@ -15,7 +14,7 @@
       <br>
       <br>
       <div class="table-responsive">
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped table-bordered" id="myTable">
         <tr>
           <th>Player</th>
           <th>Name of Player</th>
@@ -25,25 +24,25 @@
                 <td> First </td>
                 <td> <input list="players" name="firstplayername" id="firstplayername" required></td>
                 <td> <input type="number" step="0.01" name="firstplayerscore" id="firstplayerscore" required><td>
-                <button id="negative1" class="btn btn-secondary">Negative</button>
+                <button onclick="myFunction()" id="negative1" type="button" class="btn btn-secondary">Negative</button>
            </tr>
            <tr>
                 <td> Second </td>
                 <td> <input list="players" name="secondplayername" id="secondplayername" required></td>
                 <td> <input type="number" step="0.01" name="secondplayerscore" id="secondplayerscore" required><td>
-                <button id="negative2" class="btn btn-secondary">Negative</button>
+                <button onclick="myFunction1()" id="negative2" type="button" class="btn btn-secondary">Negative</button>
            </tr>
            <tr>
                 <td> Third </td>
                 <td> <input list="players" name="thirdplayername" id="thirdplayername" required></td>
                 <td> <input type="number" step="0.01" name="thirdplayerscore" id="thirdplayerscore" required><td>
-                <button id="negative3" class="btn btn-secondary">Negative</button>
+                <button onclick="myFunction2()" id="negative3" type="button" class="btn btn-secondary">Negative</button>
            </tr>
            <tr>
                 <td> Fourth </td>
                 <td> <input list="players" name="fourthplayername" id="fourthplayername" required></td>
                 <td> <input type="number" step="0.01" name="fourthplayerscore" id="fourthplayerscore" required><td>
-                <button id="negative4" class="btn btn-secondary">Negative</button>
+                <button onclick="myFunction3()" id="negative4" type="button" class="btn btn-secondary">Negative</button>
            </tr>
 
       </table>
@@ -57,4 +56,51 @@
       </form>
 </div>
 </div>
+{% endblock %}
+
+
+{% block head %}
+{{super()}}
+  <script>
+  function myFunction() {
+    y = document.getElementById("myTable").rows[1].cells[2].innerHTML;
+    x = document.getElementById("firstplayerscore").value;
+    p = parseInt(x);
+    secondp = 0 - p;
+    var htmlstring = "<input type=\"number\" value="
+    var res = htmlstring.concat(secondp, " step=\"0.01\" name=\"firstplayerscore\" id=\"firstplayerscore\" required", ">");
+    var x = document.getElementById("myTable").rows[1].cells;
+    x[2].innerHTML = res;
+  }
+  function myFunction1() {
+    y = document.getElementById("myTable").rows[2].cells[2].innerHTML;
+    x = document.getElementById("secondplayerscore").value;
+    p = parseInt(x);
+    secondp = 0 - p;
+    var htmlstring = "<input type=\"number\" value="
+    var res = htmlstring.concat(secondp, " step=\"0.01\" name=\"secondplayerscore\" id=\"secondplayerscore\" required", ">");
+    var x = document.getElementById("myTable").rows[2].cells;
+    x[2].innerHTML = res;
+  }
+  function myFunction2() {
+    y = document.getElementById("myTable").rows[3].cells[2].innerHTML;
+    x = document.getElementById("thirdplayerscore").value;
+    p = parseInt(x);
+    secondp = 0 - p;
+    var htmlstring = "<input type=\"number\" value="
+    var res = htmlstring.concat(secondp, " step=\"0.01\" name=\"thirdplayerscore\" id=\"thirdplayerscore\" required", ">");
+    var x = document.getElementById("myTable").rows[3].cells;
+    x[2].innerHTML = res;
+  }
+  function myFunction3() {
+    y = document.getElementById("myTable").rows[4].cells[2].innerHTML;
+    x = document.getElementById("fourthplayerscore").value;
+    p = parseInt(x);
+    secondp = 0 - p;
+    var htmlstring = "<input type=\"number\" value="
+    var res = htmlstring.concat(secondp, " step=\"0.01\" name=\"fourthplayerscore\" id=\"fourthplayerscore\" required", ">");
+    var x = document.getElementById("myTable").rows[4].cells;
+    x[2].innerHTML = res;
+  }
+  </script>
 {% endblock %}
