@@ -7,6 +7,8 @@ import requests
 import json
 from datetime import datetime
 from decimal import Decimal
+from flask_socketio import SocketIO, emit
+
 app = Flask(__name__)
 
 URL = os.environ.get('DATABASE_URL2')
@@ -16,7 +18,16 @@ GRRequestKey = os.environ.get('GRRequestKey')
 engine = create_engine(URL)
 db = scoped_session(sessionmaker(bind=engine))
 bootstrap = Bootstrap(app)
+socketio = SocketIO(app)
 
+@socketio.on("submit message")
+def message (data):
+      selection = data["selection"]
+      emit("announce message", {"selection": selection}, broadcast=True)
+
+@app.route("/chat")
+def chat():
+    return render_template("chat.html")
 
 class SessionRecord:
     def __init__(self, players,session):
@@ -180,8 +191,6 @@ def allsessions():
         dateString = str(session.gamedate)
         dateString = dateString[:10]
 
-
-
         scores = {
             x : dateString,
             playonename : playonescore,
@@ -191,6 +200,7 @@ def allsessions():
             playfivename : playfivescore
 
         }
+
         allsessions.append(scores)
 
 
@@ -253,17 +263,14 @@ def sessions():
 
 @app.route("/createsession", methods = ["GET", "POST"])
 def createsessions():
-
     req = request.form
     dateOfSession = req.get("sessiondate")
     format = '%Y-%m-%d'
     date = datetime.strptime(dateOfSession, format)
-
     playeronename = req.get("firstplayername")
     playertwoname = req.get("secondplayername")
     playerthreename = req.get("thirdplayername")
     playerfourname = req.get("fourthplayername")
-
     playerOneCommand = "SELECT * FROM mjplayer WHERE name LIKE" + " '%" + playeronename + "%'"
     playerTwoCommand = "SELECT * FROM mjplayer WHERE name LIKE" + " '%" + playertwoname + "%'"
     playerThreeCommand = "SELECT * FROM mjplayer WHERE name LIKE" + " '%" + playerthreename + "%'"
@@ -291,6 +298,150 @@ def createsessions():
     return redirect(url_for("allsessions"))
 #@app.route("/createnewplayer", methods=["GET", "POST"])
 #def createnewplayer()
+
+@app.route('/allsessions/<gamedate>')
+def session(gamedate):
+    gamedate2 = gamedate +  " 00:00:00"
+    session = db.execute("SELECT * FROM mjsessions WHERE gamedate = :gamedate", {"gamedate": gamedate2}).fetchone()
+    #session = db.execute("SELECT * FROM mjsessions WHERE id = :id", {"id": session_id}).fetchone()
+    players = db.execute("SELECT * FROM mjplayer")
+    playerlist = [1, 2, 3, 4, 5]
+
+    playeroneid = session.playerone_id
+    playerOneCommand = "SELECT * FROM mjplayer WHERE id = " + str(playeroneid)
+    playerone = db.execute(playerOneCommand).fetchone()
+    playeronename = playerone.name
+    playeronescore = session.playerone_score
+    if playerone.id == 1:
+        playonename = playeronename
+        playonescore = playeronescore
+        playerlist.remove(1)
+    if playerone.id == 2:
+        playtwoname = playeronename
+        playtwoscore = playeronescore
+        playerlist.remove(2)
+    if playerone.id == 3:
+        playthreename = playeronename
+        playthreescore = playeronescore
+        playerlist.remove(3)
+    if playerone.id == 4:
+        playfourname = playeronename
+        playfourscore = playeronescore
+        playerlist.remove(4)
+    if playerone.id == 5:
+        playfivename = playeronename
+        playfivescore = playeronescore
+        playerlist.remove(5)
+    playertwoid = session.playertwo_id
+    playerTwoCommand = "SELECT * FROM mjplayer WHERE id = " + str(playertwoid)
+    playertwo = db.execute(playerTwoCommand).fetchone()
+    playertwoname = playertwo.name
+    playertwoscore = session.playertwo_score
+    playertwoTableID = playertwo.id
+    if playertwo.id == 1:
+        playonename = playertwoname
+        playonescore = playertwoscore
+        playerlist.remove(1)
+    if playertwo.id == 2:
+        playtwoname = playertwoname
+        playtwoscore = playertwoscore
+        playerlist.remove(2)
+    if playertwo.id == 3:
+        playthreename = playertwoname
+        playthreescore = playertwoscore
+        playerlist.remove(3)
+    if playertwo.id == 4:
+        playfourname = playertwoname
+        playfourscore = playertwoscore
+        playerlist.remove(4)
+    if playertwo.id == 5:
+        playfivename = playertwoname
+        playfivescore = playertwoscore
+        playerlist.remove(5)
+
+    playerthreeid = session.playerthree_id
+    playerThreeCommand = "SELECT * FROM mjplayer WHERE id = " + str(playerthreeid)
+    playerthree = db.execute(playerThreeCommand).fetchone()
+    playerthreename = playerthree.name
+    playerthreescore = session.playerthree_score
+    playertthreeTableID = playerthree.id
+    if playerthree.id == 1:
+        playonename = playerthreename
+        playonescore = playerthreescore
+    if playerthree.id == 2:
+        playtwoname = playerthreename
+        playtwoscore = playerthreescore
+    if playerthree.id == 3:
+        playthreename = playerthreename
+        playthreescore = playerthreescore
+    if playerthree.id == 4:
+        playfourname = playerthreename
+        playfourscore = playerthreescore
+    if playerthree.id == 5:
+        playfivename = playerthreename
+        playfivescore = playerthreescore
+
+    playerfourid = session.playerfour_id
+    playerFourCommand = "SELECT * FROM mjplayer WHERE id = " + str(playerfourid)
+    playerfour = db.execute(playerFourCommand).fetchone()
+    playerfourname = playerfour.name
+    playerfourscore = session.playerfour_score
+    playerfourTableID = playerfour.id
+    if playerfour.id == 1:
+        playonename = playerfourname
+        playonescore = playerfourscore
+        playerlist.remove(1)
+    if playerfour.id == 2:
+        playtwoname = playerfourname
+        playtwoscore = playerfourscore
+        playerlist.remove(2)
+    if playerfour.id == 3:
+        playthreename = playerfourname
+        playthreescore = playerfourscore
+        playerlist.remove(3)
+    if playerfour.id == 4:
+        playfourname = playerfourname
+        playfourscore = playerfourscore
+        playerlist.remove(4)
+    if playerfour.id == 5:
+        playfivename = playerfourname
+        playfivescore = playerfourscore
+        playerlist.remove(5)
+
+    playerWhoDidNotPlay = playerlist[0];
+    playerFiveCommand = "SELECT * FROM mjplayer WHERE id = " + str(playerWhoDidNotPlay)
+    playerfive = db.execute(playerFiveCommand).fetchone()
+    playerfivename = playerfive.name
+    playerfivescore = "Did Not Play"
+    playerfiveTableID = playerfive.id
+    if playerfive.id == 1:
+        playonename = playerfivename
+        playonescore = playerfivescore
+    if playerfive.id == 2:
+        playtwoname = playerfivename
+        playtwoscore = playerfivescore
+    if playerfive.id == 3:
+        playthreename = playerfivename
+        playthreescore = playerfivescore
+    if playerfive.id == 4:
+        playfourname = playerfivename
+        playfourscore = playerfivescore
+    if playerfive.id == 5:
+        playfivename = playerfivename
+        playfivescore = playerfivescore
+    dateString = str(session.gamedate)
+    dateString = dateString[:10]
+    x = 1
+    scores = {
+        x : dateString,
+        playonename : playonescore,
+        playtwoname : playtwoscore,
+        playthreename : playthreescore,
+        playfourname : playfourscore,
+        playfivename : playfivescore,
+    }
+
+    return render_template("session.html", score=scores, players=players)
 
 
 #@app.route("/searchforbookbyisbn", methods=["GET", "POST"])

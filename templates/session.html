@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}Single Session{% endblock %}
+{% block content %}
+
+
+  <div class='container'>
+    <h3>Single Session Record </h3>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th>Date of Game</th>
+          {% for player in players %}
+          <th>{{ player.name }}</th>
+          {% endfor %}
+        </tr>
+        <tr>
+          {% for key, value in score.items() %}
+          <td>{{ value }}</td>
+          {% endfor %}
+        </tr>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

@@ -5,7 +5,7 @@
 
 <h2>All Sessions </h2>
   <div class="table-responsive">
-<table class="table table-striped table-bordered">
+<table onload="myfunction()" class="table table-striped table-bordered" id="sessionstable">
   <tr>
     <th>Date of Game</th>
     {% for player in players %}
@@ -23,4 +23,26 @@
 </table>
 <div>
 </div>
+{% endblock %}
+
+{% block head %}
+{{super()}}
+<script>
+
+function myfunction(){
+  var table = document.getElementById('sessionstable')
+  for (var r = 1, n = table.rows.length; r < n; r++) {
+            date = table.rows[r].cells[0].innerHTML;
+            string1= "<td><a href=\"\/allsessions\/";
+            string2= date;
+            string3= "\">";
+            string4= date;
+            string5= "<\/a><td>";
+            string6 = string1.concat(string2,string3,string4,string5);
+            table.rows[r].cells[0].innerHTML = string6;
+    };
+}
+window.onload = myfunction;
+
+</script>
 {% endblock %}

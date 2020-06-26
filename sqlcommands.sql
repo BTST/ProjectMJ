@@ -11,6 +11,22 @@ CREATE TABLE mjsessions (
     playerfour_score DECIMAL(5,2)
 );
 
+CREATE TABLE scores (
+  id SERIAL PRIMARY KEY,
+  gamedate DATE NOT NULL,
+  playonename VARCHAR NOT NULL,
+  playonescore VARCHAR NOT NULL,
+  playtwoname VARCHAR NOT NULL,
+  playtwoscore VARCHAR NOT NULL,
+  playthreename VARCHAR NOT NULL,
+  playthreescore VARCHAR NOT NULL,
+  playfourname VARCHAR NOT NULL,
+  playfourscore VARCHAR NOT NULL,
+  playfivename VARCHAR NOT NULL,
+  playfivescore VARCHAR NOT NULL
+);
+
+
 CREATE TABLE mjplayer (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL
@@ -28,6 +44,18 @@ INSERT INTO mjplayer (name) VALUES ('Lingwei');
 URL="postgres://bjwxmuebywiexo:cbb7614809a4bba5aa0a32b18dbef509fed6732c10ca07a2b81dc2dac043d721@ec2-54-211-210-149.compute-1.amazonaws.com:5432/d2n3ohvdkibnt3"
 app.config['SECRET_KEY']="OCML3BRawWEUeaxcuKHLpw"
 GRRequestKey="GZ4LbC681pT1BZJO6WLQ"
+
+socket.on('connect', () => {
+    document.querySelectorAll('button').forEach
+    (button => {
+        button.onclick = () => {
+            const selection = document.getElementById('message').value;
+            alert(selection);
+            socket.emit('submit message', {'selection': selection});
+        };
+    });
+});
+
 
 git push heroku master
 heroku ps:scale web=1

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+      <body>
+          <ul id="allmessages" style="list-style-type:none;">
+          </ul>
+          <hr>
+          <input type="text" class="message" id="message" placeholder="Messages"/>
+          <button data-id="messagebutton" id="messagebutton">Submit Message</button>
+      </body>
+
+{% endblock %}
