@@ -7,7 +7,7 @@
   <div class="table-responsive">
 <table class="table table-striped table-bordered">
   <tr>
-    <th>🀄Name</th>
+    <th>Name</th>
     <th>Games Played</th>
     <th>Total Score</th>
     <th>Avg. Score</th>
@@ -21,6 +21,24 @@
      </tr>
      <tr></tr>
   {% endfor %}
+</table>
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>Category</th>
+    <th>Name</th>
+  </tr>
+<tr>
+  <td>Overall Winner</td>
+  <td>{{ winner }}</td>
+  </tr>
+  <tr>
+    <td>Best per average</td>
+    <td>{{ winner2 }}</td>
+    </tr>
+    <tr>
+      <td>Closest Challenger</td>
+      <td>{{ winner3 }}</td>
+      </tr>
 </table>
 <div>
 </div>

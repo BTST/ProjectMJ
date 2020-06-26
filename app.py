@@ -11,7 +11,6 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 
-
 URL = os.environ.get('DATABASE_URL2')
 SECRETKEY = os.environ.get('SECRET_KEY')
 GRRequestKey = os.environ.get('GRRequestKey')
@@ -217,6 +216,7 @@ class MahjongPlayer:
         self.lifetime = lifetime
 
 
+
 @app.route("/players")
 def players():
     players = db.execute("SELECT * FROM mjplayer")
@@ -253,7 +253,13 @@ def players():
         else:
             averagescore = 0
         mjplayers.append(MahjongPlayer (nameOfPlayer, mjplayer.id, gamesplayed,averagescore,lifetime))
-    return render_template("players.html", players=mjplayers)
+    sorted_mjplayers = sorted(mjplayers, key=lambda x: x.lifetime)
+    winner = sorted_mjplayers[-1].name
+    sorted_mjplayers2 = sorted(mjplayers, key=lambda x: x.averagescore)
+    winner2 = sorted_mjplayers2[-1].name
+
+    winner3 = sorted_mjplayers[-2].name
+    return render_template("players.html", players=mjplayers, winner=winner, winner2=winner2, winner3=winner3)
 
 
 @app.route("/sessions", methods = ["GET", "POST"])
