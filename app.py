@@ -11,6 +11,7 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 
+
 URL = os.environ.get('DATABASE_URL2')
 SECRETKEY = os.environ.get('SECRET_KEY')
 GRRequestKey = os.environ.get('GRRequestKey')

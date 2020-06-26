@@ -18,7 +18,6 @@
     <td>{{ value }}</td>
     {% endfor %}
     </tr>
-    <tr></tr>
   {% endfor %}
 </table>
 <div>
@@ -31,7 +30,9 @@
 
 function myfunction(){
   var table = document.getElementById('sessionstable')
-  for (var r = 1, n = table.rows.length; r < n; r++) {
+
+  var r = 1;
+  for (n = table.rows.length; r < n; r++) {
             date = table.rows[r].cells[0].innerHTML;
             string1= "<td><a href=\"\/allsessions\/";
             string2= date;
