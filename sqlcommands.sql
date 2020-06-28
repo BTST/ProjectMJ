@@ -23,7 +23,8 @@ CREATE TABLE scores (
   playfourname VARCHAR NOT NULL,
   playfourscore VARCHAR NOT NULL,
   playfivename VARCHAR NOT NULL,
-  playfivescore VARCHAR NOT NULL
+  playfivescore VARCHAR NOT NULL,
+  gameid INTEGER NOT NULL
 );
 
 
