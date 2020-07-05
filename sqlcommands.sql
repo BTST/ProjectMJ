@@ -58,6 +58,8 @@ socket.on('connect', () => {
 });
 
 
+contours,hierachy=cv2.findContours(edges,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
 git push heroku master
 heroku ps:scale web=1
 heroku open
