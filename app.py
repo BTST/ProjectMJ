@@ -8,6 +8,7 @@ import json
 from datetime import datetime
 from decimal import Decimal
 from flask_socketio import SocketIO, emit
+import time
 
 app = Flask(__name__)
 
@@ -72,12 +73,17 @@ def allsessions():
     sessions = db.execute("SELECT * FROM mjsessions")
     x = 1
     for session in sessions:
+        #Jerry[1], Meihui[2], Jason[3], Ben[4], Lingwei[5]
         playerlist = [1, 2, 3, 4, 5]
+
+
         playeroneid = session.playerone_id
         playerOneCommand = "SELECT * FROM mjplayer WHERE id = " + str(playeroneid)
         playerone = db.execute(playerOneCommand).fetchone()
         playeronename = playerone.name
         playeronescore = session.playerone_score
+
+
 
         if playerone.id == 1:
             playonename = playeronename
@@ -104,16 +110,16 @@ def allsessions():
             playfivescore = playeronescore
             playerlist.remove(5)
 
-#Jerry[0], Meihui[1], Jason[2], Ben[3], Lingwei[4]
 
         playertwoid = session.playertwo_id
         playerTwoCommand = "SELECT * FROM mjplayer WHERE id = " + str(playertwoid)
         playertwo = db.execute(playerTwoCommand).fetchone()
         playertwoname = playertwo.name
         playertwoscore = session.playertwo_score
+
         if playertwo.id == 1:
-            playeronename = playertwoname
-            playeronescore = playertwoscore
+            playonename = playertwoname
+            playonescore = playertwoscore
             playerlist.remove(1)
         if playertwo.id == 2:
             playtwoname = playertwoname
@@ -185,6 +191,7 @@ def allsessions():
             playerlist.remove(5)
 
         playerWhoDidNotPlay = playerlist[0]
+
         playerFiveCommand = "SELECT * FROM mjplayer WHERE id = " + str(playerWhoDidNotPlay)
         playerfive = db.execute(playerFiveCommand).fetchone()
 
@@ -193,18 +200,23 @@ def allsessions():
         if playerfive.id == 1:
             playonename = playerfivename
             playonescore = playerfivescore
+            playerlist.remove(1)
         if playerfive.id == 2:
             playtwoname = playerfivename
             playtwoscore = playerfivescore
+            playerlist.remove(2)
         if playerfive.id == 3:
             playthreename = playerfivename
             playthreescore = playerfivescore
+            playerlist.remove(3)
         if playerfive.id == 4:
             playfourname = playerfivename
             playfourscore = playerfivescore
+            playerlist.remove(4)
         if playerfive.id == 5:
             playfivename = playerfivename
             playfivescore = playerfivescore
+            playerlist.remove(5)
 
         dateString = str(session.gamedate)
         dateString = dateString[:10]
@@ -219,6 +231,8 @@ def allsessions():
         }
         allsessions.append(scores)
         x = x + 1
+
+
     return render_template("allsessions.html", allsessions=allsessions, players=players)
 
 class MahjongPlayer:
@@ -263,15 +277,16 @@ def players():
         for game in fourthpositiongames:
             lifetime = lifetime + game.playerfour_score
         if gamesplayed > 0:
-            averagescore = lifetime / gamesplayed
+            averagescore2 = lifetime / gamesplayed
+            averagescore = round (averagescore2,2)
         else:
             averagescore = 0
+
         mjplayers.append(MahjongPlayer (nameOfPlayer, mjplayer.id, gamesplayed,averagescore,lifetime))
     sorted_mjplayers = sorted(mjplayers, key=lambda x: x.lifetime)
     winner = sorted_mjplayers[-1].name
     sorted_mjplayers2 = sorted(mjplayers, key=lambda x: x.averagescore)
     winner2 = sorted_mjplayers2[-1].name
-
     winner3 = sorted_mjplayers[-2].name
     return render_template("players.html", players=mjplayers, winner=winner, winner2=winner2, winner3=winner3)
 
@@ -324,7 +339,8 @@ def createsessions():
 def session(gamedate):
     gamedate2 = gamedate +  " 00:00:00"
     session = db.execute("SELECT * FROM mjsessions WHERE gamedate = :gamedate", {"gamedate": gamedate2}).fetchone()
-    x = 1#session = db.execute("SELECT * FROM mjsessions WHERE id = :id", {"id": session_id}).fetchone()
+    x = 1
+    #session = db.execute("SELECT * FROM mjsessions WHERE id = :id", {"id": session_id}).fetchone()
     players = db.execute("SELECT * FROM mjplayer")
     playerlist = [1, 2, 3, 4, 5]
     playeroneid = session.playerone_id
@@ -364,8 +380,8 @@ def session(gamedate):
     playertwoname = playertwo.name
     playertwoscore = session.playertwo_score
     if playertwo.id == 1:
-        playeronename = playertwoname
-        playeronescore = playertwoscore
+        playonename = playertwoname
+        playonescore = playertwoscore
         playerlist.remove(1)
     if playertwo.id == 2:
         playtwoname = playertwoname
