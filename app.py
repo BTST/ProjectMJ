@@ -196,7 +196,7 @@ def allsessions():
         playerfive = db.execute(playerFiveCommand).fetchone()
 
         playerfivename = playerfive.name
-        playerfivescore = "Did Not Play"
+        playerfivescore = "NA"
         if playerfive.id == 1:
             playonename = playerfivename
             playonescore = playerfivescore
